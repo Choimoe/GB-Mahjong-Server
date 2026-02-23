@@ -39,7 +39,7 @@ void start_server(int port, const std::string& log_path) {
             }
             logger.info(std::string("[REQUEST] 收到请求: IP: ") + remote_ip + " " + req.body);
             logger.info(std::string("[CLIENT] IP: ") + remote_ip + " UA: " + (received_json.contains("userAgent") ? received_json["userAgent"].get<std::string>() : "未知UA"));
-            logger.debug(std::string("解析后的JSON: ") + received_json.dump(4));
+            logger.debug(std::string("解析后的JSON: ") + received_json.dump());
             gb_string = JsonToGbString::translate(received_json);
             logger.debug(std::string("牌型字符串: ") + gb_string);
             mahjong::Handtiles ht;
@@ -73,7 +73,7 @@ void start_server(int port, const std::string& log_path) {
             response_json["fan_details"] = fan_details;
             response_json["ting"] = ting_result;
             response_json["parsed_hand"] = ht.HandtilesToString();
-            logger.info(std::string("[RESPONSE] 返回内容: ") + response_json.dump(4));
+            logger.info(std::string("[RESPONSE] 返回内容: ") + response_json.dump());
         } catch (const std::exception& e) {
             logger.error(std::string("处理时发生错误: ") + e.what());
             response_json["status"] = "error";
